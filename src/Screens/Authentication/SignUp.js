@@ -7,11 +7,16 @@ import {
   StyleSheet,
   Image
 } from 'react-native';
-import useNavigation from '@react-navigation/native';
 
 const SignUp = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  // State variables for form fields
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
@@ -30,28 +35,35 @@ const SignUp = ({ navigation }) => {
       <Text style={styles.header}>Sign Up</Text>
 
       <View style={styles.inputContainer}>
-      <Text style={styles.label}>Name</Text>
-      <TextInput
+        <Text style={styles.label}>Name</Text>
+        <TextInput
           style={styles.input}
-          placeholder="Email"
+          placeholder="Name"
           placeholderTextColor="cyan"
-          keyboardType="email-address"
+          value={name}
+          onChangeText={setName}
         />
+        
         <Text style={styles.label}>Email</Text>
-
         <TextInput
           style={styles.input}
           placeholder="Email"
           placeholderTextColor="cyan"
           keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
         />
-          <Text style={styles.label}>Phone</Text>
-      <TextInput
+        
+        <Text style={styles.label}>Phone</Text>
+        <TextInput
           style={styles.input}
-          placeholder="Email"
+          placeholder="Phone"
           placeholderTextColor="cyan"
-          keyboardType="number"
+          keyboardType="number-pad"
+          value={phone}
+          onChangeText={setPhone}
         />
+        
         <Text style={styles.label}>Password</Text>
         <View style={styles.passwordContainer}>
           <TextInput
@@ -59,6 +71,8 @@ const SignUp = ({ navigation }) => {
             placeholder="Password"
             placeholderTextColor="cyan"
             secureTextEntry={!isPasswordVisible}
+            value={password}
+            onChangeText={setPassword}
           />
           <TouchableOpacity onPress={togglePasswordVisibility}>
             <Image
@@ -73,13 +87,9 @@ const SignUp = ({ navigation }) => {
         </View>
       </View>
 
-  
-
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-
-
 
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
@@ -121,32 +131,13 @@ const styles = StyleSheet.create({
   },
   passwordContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   passwordIcon: {
     width: 20,
     height: 20,
     marginLeft: -40,
     marginTop: 30,
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingBottom: 10,
-    paddingHorizontal: 10,
-  },
-  checkbox: {
-    flexDirection: 'row',
-  },
-  checkboxIcon: {
-    width: 25,
-    height: 25,
-  },
-  checkboxText: {
-    color: 'cyan',
-    marginLeft: 10,
-  },
-  forgotPasswordText: {
-    color: 'cyan',
   },
   button: {
     backgroundColor: '#00FFFF',
@@ -159,36 +150,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 18,
-  },
-  orSignInContainer: {
-    justifyContent: 'center',
-    padding: 30,
-  },
-  orSignInText: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  socialSignInContainer: {
-    flexDirection: 'row',
-    paddingVertical: 10,
-    justifyContent: 'space-around',
-  },
-  socialButton: {
-    backgroundColor: '#2c3e50',
-    flexDirection: 'row',
-    width: '45%',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderRadius: 5,
-    height: 50,
-  },
-  socialIcon: {
-    width: 40,
-    height: 40,
-  },
-  socialText: {
-    color: 'white',
   },
   footer: {
     position: 'absolute',

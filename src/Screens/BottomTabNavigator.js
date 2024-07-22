@@ -34,6 +34,7 @@ const BottomTabsNavigator = () => {
             />
           );
         },
+        
         tabBarActiveTintColor: 'cyan', 
         tabBarInactiveTintColor: 'gray', 
         headerShown:false

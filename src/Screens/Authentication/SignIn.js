@@ -7,11 +7,14 @@ import {
   StyleSheet,
   Image
 } from 'react-native';
-import useNavigation from '@react-navigation/native';
 
 const SignIn = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  // State variables for form fields
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
@@ -36,6 +39,8 @@ const SignIn = ({ navigation }) => {
           placeholder="Email"
           placeholderTextColor="cyan"
           keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
         />
         <Text style={styles.label}>Password</Text>
         <View style={styles.passwordContainer}>
@@ -44,6 +49,8 @@ const SignIn = ({ navigation }) => {
             placeholder="Password"
             placeholderTextColor="cyan"
             secureTextEntry={!isPasswordVisible}
+            value={password}
+            onChangeText={setPassword}
           />
           <TouchableOpacity onPress={togglePasswordVisibility}>
             <Image
@@ -71,16 +78,16 @@ const SignIn = ({ navigation }) => {
           <Text style={styles.checkboxText}>Remember me</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={gotoForgotPassword}>
-          <Text style={styles.forgotPasswordText}>forgot password ?</Text>
+          <Text style={styles.forgotPasswordText}>Forgot password?</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('DrawerNavigator')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('DrawerNavigator')}>
         <Text style={styles.buttonText}>Sign In</Text>
       </TouchableOpacity>
 
       <View style={styles.orSignInContainer}>
-        <Text style={styles.orSignInText}>_________ Or SignIn with _______</Text>
+        <Text style={styles.orSignInText}>_________ Or Sign In with _______</Text>
       </View>
 
       <View style={styles.socialSignInContainer}>
@@ -102,7 +109,7 @@ const SignIn = ({ navigation }) => {
 
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.footerText}>Already have an account? <Text style={styles.signInText}>Sign Up</Text></Text>
+          <Text style={styles.footerText}>Don't have an account? <Text style={styles.signInText}>Sign Up</Text></Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -140,6 +147,7 @@ const styles = StyleSheet.create({
   },
   passwordContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   passwordIcon: {
     width: 20,
@@ -155,6 +163,7 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   checkboxIcon: {
     width: 25,
