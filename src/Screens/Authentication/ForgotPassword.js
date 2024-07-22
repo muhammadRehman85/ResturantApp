@@ -1,6 +1,6 @@
 import {View, Text, TextInput, TouchableOpacity,Image} from 'react-native';
 import React from 'react';
-import Navigation from '../../Components/Navigation';
+
 // import { Image } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
 
 

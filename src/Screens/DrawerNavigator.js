@@ -2,9 +2,6 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './HomeScreen';
 import ProfileScreen from './ProfileScreen';
-; // Adjust paths accordingly
-
-import Navigation from '../Components/Navigation';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigator from './BottomTabNavigator';
 
