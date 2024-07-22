@@ -10,7 +10,6 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   return (
     <>
-    <Text>hdhghhg</Text>
     <Tab.Navigator
     screenOptions={{ headerShown: false,}}
     tabBarOptions={{
