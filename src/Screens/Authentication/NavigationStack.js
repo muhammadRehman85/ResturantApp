@@ -5,9 +5,12 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassword';
 import DrawerNavigator from '../DrawerNavigator';
+import Help from '../AppNavigationScreens/Help';
+import Header from '../../Components/Header';
+import Search from '../../Screens/AppNavigationScreens/Search'
 const Stack = createNativeStackNavigator();
 
-const AuthStack = () => {
+const NaviagationStack = () => {
   return (
     <>
      <Stack.Navigator options={{headerShown: false}}>
@@ -31,8 +34,18 @@ const AuthStack = () => {
             component={DrawerNavigator}
             options={{headerShown: false}}
           />
+          <Stack.Screen
+            name="Help"
+            component={Help}
+            
+          />
+           <Stack.Screen
+            name="Search"
+            component={Search}
+            
+          />
         </Stack.Navigator></>
   )
 }
 
-export default AuthStack
+export default NaviagationStack
