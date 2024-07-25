@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingHorizontal:5
   },
   leftSection: {
     width: '50%',

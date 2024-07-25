@@ -8,6 +8,11 @@ import DrawerNavigator from '../DrawerNavigator';
 import Help from '../AppNavigationScreens/Help';
 import Header from '../../Components/Header';
 import Search from '../../Screens/AppNavigationScreens/Search'
+import Details from '../AppNavigationScreens/Details';
+import Dishes from '../../Components/Dishes';
+import Starter from '../CategoriesScreens/Starter';
+import TopTabNavigator from '../TopTabNavigator';
+import EditProfile from '../DrawerScreens/EditProfile';
 const Stack = createNativeStackNavigator();
 
 const NaviagationStack = () => {
@@ -44,7 +49,20 @@ const NaviagationStack = () => {
             component={Search}
             
           />
+          <Stack.Screen
+            name="Details"
+            component={Details}
+            options={{headerShown:false}}
+          />
+            
+             <Stack.Screen
+            name="Tabs"
+            component={TopTabNavigator}          />
+             <Stack.Screen
+            name="EditProfile"
+            component={EditProfile}          />
         </Stack.Navigator></>
+        
   )
 }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import HomeScreen from './HomeScreen';
 import ProfileScreen from './ProfileScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigator from './BottomTabNavigator';
@@ -10,8 +9,8 @@ import Addresses from './DrawerScreens/Addresses';
 import Favorites from './DrawerScreens/Favorites';
 import PaymetsMethods from './DrawerScreens/PaymentsMethods';
 import ChangePassword from './DrawerScreens/ChangePassword';
-import Logout from './DrawerScreens/logout';
-import AcountDeletion from './DrawerScreens/AcountDeletion';
+import Logout from './DrawerScreens/Logout';
+import PaymentsMethods from './DrawerScreens/PaymentsMethods';
 
 const Drawer = createDrawerNavigator();
 
@@ -40,11 +39,9 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Orders" component={Orders} />
       <Drawer.Screen name="Addresses" component={Addresses} />
       <Drawer.Screen name="Favorites" component={Favorites} />
-      <Drawer.Screen name="PaymentsMethodes" component={PaymetsMethods} />
-      <Drawer.Screen name="ChangePassword" component={ChangePassword} />
+      <Drawer.Screen name="PaymentsMethods" component={PaymentsMethods} />
       <Drawer.Screen name="Logout" component={Logout} />
-      <Drawer.Screen name="AcountDeletion" component={AcountDeletion} />
-
+      <Drawer.Screen name="ChangePassword" component={ChangePassword} />
     </Drawer.Navigator>
     <NavigationContainer independent={true}>
 

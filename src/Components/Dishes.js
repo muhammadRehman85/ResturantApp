@@ -1,8 +1,15 @@
 import { View, Text, Image, TouchableOpacity, FlatList, ScrollView, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-const Dishes = ({ foodItems }) => {
+const Dishes = ({ foodItems ,navigation,}) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+const gotoDetails=(item)=>{
+navigation.navigate('Details',{item})
+}
   const renderFoodItems = ({ item }) => (
+    <TouchableOpacity onPress={()=>gotoDetails(item)}>
     <View style={styles.foodItemContainer}>
       <View style={styles.imageContainer}>
         <Image source={item.image} style={styles.foodImage} />
@@ -21,12 +28,30 @@ const Dishes = ({ foodItems }) => {
         </TouchableOpacity>
       </View>
       <Image source={require('../../assets/foodImages/heart.png')} style={styles.heartIcon} />
-    </View>
+    </View></TouchableOpacity>
+  );
+
+  const skeleton = ({ item }) => (
+    <SkeletonPlaceholder backgroundColor="#e1e9ee" highlightColor="#f2f8fc">
+      <View style={styles.skeletonContainer}>
+        <View style={styles.imageContainer}>
+          <View style={styles.skeletonImage} />
+        </View>
+        <View style={styles.infoContainer}>
+          <View style={styles.skeletonTitle} />
+          <View style={styles.skeletonText} />
+          <View style={styles.skeletonText} />
+          <View style={styles.skeletonPrice} />
+          <TouchableOpacity style={styles.skeletonAddButton} />
+        </View>
+        <Image source={require('../../assets/foodImages/grayheart.png')} style={styles.heartIcon} />
+      </View>
+    </SkeletonPlaceholder>
   );
 
   return (
     <ScrollView style={styles.scrollView}>
-      <FlatList data={foodItems} renderItem={renderFoodItems} keyExtractor={item => item.id} />
+      <FlatList data={foodItems} renderItem={isLoading ? skeleton : renderFoodItems} keyExtractor={item => item.id} />
     </ScrollView>
   );
 };
@@ -39,7 +64,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 180,
     flexDirection: 'row',
-    elevation: 2,
+    elevation:1,
     borderRadius: 5,
     marginVertical: 10,
     position: 'relative',
@@ -67,7 +92,7 @@ const styles = StyleSheet.create({
   foodDescription: {
     color: 'grey',
     fontSize: 12,
-    margin: 10,
+    margin:8,
   },
   priceContainer: {
     backgroundColor: '#f1c40f',
@@ -97,6 +122,45 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 5,
     right: 10,
+  },
+  skeletonContainer: {
+    width: '100%',
+    height: 180,
+    flexDirection: 'row',
+    elevation: 2,
+    borderWidth: 0.5,
+    borderRadius: 5,
+    marginVertical: 10,
+    position: 'relative',
+  },
+  skeletonImage: {
+    width: '90%',
+    height: '60%',
+    backgroundColor: '#ecf0f1',
+  },
+  skeletonTitle: {
+    width: '60%',
+    height: 30,
+    backgroundColor: '#ecf0f1',
+  },
+  skeletonText: {
+    width: '60%',
+    height: 10,
+    backgroundColor: '#ecf0f1',
+    marginVertical: 5,
+  },
+  skeletonPrice: {
+    backgroundColor: '#ecf0f1',
+    width: 80,
+    minHeight: 30,
+    borderRadius: 5,
+  },
+  skeletonAddButton: {
+    backgroundColor: '#ecf0f1',
+    width: 80,
+    minHeight: 30,
+    borderRadius: 5,
+    marginTop: 5,
   },
 });
 
