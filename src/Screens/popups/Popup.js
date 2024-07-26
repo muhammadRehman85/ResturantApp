@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 
 const Popup= () => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(true);
 
   return (
     <View style={styles.container}>
@@ -10,10 +10,10 @@ const Popup= () => {
         <Text style={styles.textStyle}>Show Popup</Text>
       </TouchableOpacity>
 
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={true}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}
@@ -30,16 +30,18 @@ const Popup= () => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width:100,
+    height:80,
     justifyContent: 'center',
     alignItems: 'center',
+    elevation:5
   },
   openButton: {
     backgroundColor: '#F194FF',

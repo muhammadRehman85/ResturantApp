@@ -1,37 +1,45 @@
-import { View, Text, Image, TouchableOpacity, FlatList, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-
-const Dishes = ({ foodItems ,navigation,}) => {
+import Popup from '../Screens/popups/Popup';
+const Dishes = ({ foodItems, navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
-
-const gotoDetails=(item)=>{
-navigation.navigate('Details',{item})
+const [visible,setVisible]=useState(false)
+  const gotoDetails = (item) => {
+    navigation.navigate('Details', { item });
+  };
+const LongPressPopup=()=>{
+  setVisible(true)
+  return(<>
+    {visible &&<Popup/>}
+  </>)
 }
-  const renderFoodItems = ({ item }) => (
-    <TouchableOpacity onPress={()=>gotoDetails(item)}>
-    <View style={styles.foodItemContainer}>
-      <View style={styles.imageContainer}>
-        <Image source={item.image} style={styles.foodImage} />
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.foodTitle}>{item.title}</Text>
-        <Text style={styles.foodDescription} numberOfLines={3} ellipsizeMode="tail">
-          {item.description}
-        </Text>
-        <View style={styles.priceContainer}>
-          <Text>{item.price}</Text>
+  const renderFoodItems = ({ item }) => (<View>
+    
+    <TouchableOpacity onLongPress={LongPressPopup}onPress={() => gotoDetails(item)}>
+      <View style={styles.foodItemContainer}>
+        <View style={styles.imageContainer}>
+          <Image source={item.image} style={styles.foodImage} />
         </View>
-        <TouchableOpacity style={styles.addButton}>
-          <Text>Add</Text>
-          <Image source={require('../../assets/foodImages/cart.png')} style={styles.cartIcon} />
-        </TouchableOpacity>
+        <View style={styles.infoContainer}>
+          <Text style={styles.foodTitle}>{item.title}</Text>
+          <Text style={styles.foodDescription} numberOfLines={3} ellipsizeMode="tail">
+            {item.description}
+          </Text>
+          <View style={styles.priceContainer}>
+            <Text>{item.price}</Text>
+          </View>
+          <TouchableOpacity style={styles.addButton}>
+            <Text>Add</Text>
+            <Image source={require('../../assets/foodImages/cart.png')} style={styles.cartIcon} />
+          </TouchableOpacity>
+        </View>
+        <Image source={require('../../assets/foodImages/heart.png')} style={styles.heartIcon} />
       </View>
-      <Image source={require('../../assets/foodImages/heart.png')} style={styles.heartIcon} />
-    </View></TouchableOpacity>
+    </TouchableOpacity></View>
   );
 
-  const skeleton = ({ item }) => (
+  const skeleton = () => (
     <SkeletonPlaceholder backgroundColor="#e1e9ee" highlightColor="#f2f8fc">
       <View style={styles.skeletonContainer}>
         <View style={styles.imageContainer}>
@@ -50,21 +58,24 @@ navigation.navigate('Details',{item})
   );
 
   return (
-    <ScrollView style={styles.scrollView}>
-      <FlatList data={foodItems} renderItem={isLoading ? skeleton : renderFoodItems} keyExtractor={item => item.id} />
-    </ScrollView>
+    <FlatList
+      data={foodItems}
+      renderItem={isLoading ? skeleton : renderFoodItems}
+      keyExtractor={item => item.id}
+      contentContainerStyle={styles.listContentContainer}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
+  listContentContainer: {
     padding: 10,
   },
   foodItemContainer: {
     width: '100%',
     height: 180,
     flexDirection: 'row',
-    elevation:1,
+    elevation: 1,
     borderRadius: 5,
     marginVertical: 10,
     position: 'relative',
@@ -92,7 +103,7 @@ const styles = StyleSheet.create({
   foodDescription: {
     color: 'grey',
     fontSize: 12,
-    margin:8,
+    margin: 8,
   },
   priceContainer: {
     backgroundColor: '#f1c40f',

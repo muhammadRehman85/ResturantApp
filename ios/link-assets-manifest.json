@@ -1,0 +1,25 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/PlaywriteBEWAL-ExtraLight.ttf",
+      "sha1": "e1a1c016ac8428c5be5fb9c1ee4bc823f9269ae3"
+    },
+    {
+      "path": "assets/fonts/PlaywriteBEWAL-Light.ttf",
+      "sha1": "02394834cede1d093826aabb8971f6fdaafd5130"
+    },
+    {
+      "path": "assets/fonts/PlaywriteBEWAL-Regular.ttf",
+      "sha1": "aa3063616284a5d40342ca4a177b56dcc4f85596"
+    },
+    {
+      "path": "assets/fonts/PlaywriteBEWAL-Thin.ttf",
+      "sha1": "4e86f2f56fa047c8afdaa0727adc8f7487a40a64"
+    },
+    {
+      "path": "assets/fonts/PlaywriteBEWAL-VariableFont_wght.ttf",
+      "sha1": "27670c83542fc5a0e91e2a684a857cc695f29b3b"
+    }
+  ]
+}

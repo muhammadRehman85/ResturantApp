@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     width: '100%',
     height: '25%',
+    position:'fixed',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',

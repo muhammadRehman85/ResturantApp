@@ -14,6 +14,11 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-Resturant-ResturantTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Resturant-ResturantTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		2D43B69AD8134320BBEDCF33 /* PlaywriteBEWAL-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44F75428C4F84D0CA5C7205D /* PlaywriteBEWAL-ExtraLight.ttf */; };
+		4EC02C6668B3438284EE9DBD /* PlaywriteBEWAL-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F59FF9283654129B7506D0A /* PlaywriteBEWAL-Light.ttf */; };
+		3D758C64C249416F914B9076 /* PlaywriteBEWAL-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 179F0EB9A19F4634A38424DD /* PlaywriteBEWAL-Regular.ttf */; };
+		111AFBFBD34C47CBB7384E5C /* PlaywriteBEWAL-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C81F6CEBC0E44490962DC5F0 /* PlaywriteBEWAL-Thin.ttf */; };
+		0FFC6D83262644A9876F432F /* PlaywriteBEWAL-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED249D264906415297499959 /* PlaywriteBEWAL-VariableFont_wght.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +41,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resturant/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resturant/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Resturant/main.m; sourceTree = "<group>"; };
-	    13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = Resturant/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = Resturant/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Resturant-ResturantTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Resturant-ResturantTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-Resturant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Resturant.debug.xcconfig"; path = "Target Support Files/Pods-Resturant/Pods-Resturant.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Resturant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Resturant.release.xcconfig"; path = "Target Support Files/Pods-Resturant/Pods-Resturant.release.xcconfig"; sourceTree = "<group>"; };
@@ -45,6 +50,11 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Resturant/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Resturant-ResturantTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Resturant-ResturantTests.release.xcconfig"; path = "Target Support Files/Pods-Resturant-ResturantTests/Pods-Resturant-ResturantTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		44F75428C4F84D0CA5C7205D /* PlaywriteBEWAL-ExtraLight.ttf */ = {isa = PBXFileReference; name = "PlaywriteBEWAL-ExtraLight.ttf"; path = "../assets/fonts/PlaywriteBEWAL-ExtraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2F59FF9283654129B7506D0A /* PlaywriteBEWAL-Light.ttf */ = {isa = PBXFileReference; name = "PlaywriteBEWAL-Light.ttf"; path = "../assets/fonts/PlaywriteBEWAL-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		179F0EB9A19F4634A38424DD /* PlaywriteBEWAL-Regular.ttf */ = {isa = PBXFileReference; name = "PlaywriteBEWAL-Regular.ttf"; path = "../assets/fonts/PlaywriteBEWAL-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C81F6CEBC0E44490962DC5F0 /* PlaywriteBEWAL-Thin.ttf */ = {isa = PBXFileReference; name = "PlaywriteBEWAL-Thin.ttf"; path = "../assets/fonts/PlaywriteBEWAL-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		ED249D264906415297499959 /* PlaywriteBEWAL-VariableFont_wght.ttf */ = {isa = PBXFileReference; name = "PlaywriteBEWAL-VariableFont_wght.ttf"; path = "../assets/fonts/PlaywriteBEWAL-VariableFont_wght.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +134,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				419B68396E144B128085021E /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -149,6 +160,19 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		419B68396E144B128085021E /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				44F75428C4F84D0CA5C7205D /* PlaywriteBEWAL-ExtraLight.ttf */,
+				2F59FF9283654129B7506D0A /* PlaywriteBEWAL-Light.ttf */,
+				179F0EB9A19F4634A38424DD /* PlaywriteBEWAL-Regular.ttf */,
+				C81F6CEBC0E44490962DC5F0 /* PlaywriteBEWAL-Thin.ttf */,
+				ED249D264906415297499959 /* PlaywriteBEWAL-VariableFont_wght.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -245,6 +269,11 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				2D43B69AD8134320BBEDCF33 /* PlaywriteBEWAL-ExtraLight.ttf in Resources */,
+				4EC02C6668B3438284EE9DBD /* PlaywriteBEWAL-Light.ttf in Resources */,
+				3D758C64C249416F914B9076 /* PlaywriteBEWAL-Regular.ttf in Resources */,
+				111AFBFBD34C47CBB7384E5C /* PlaywriteBEWAL-Thin.ttf in Resources */,
+				0FFC6D83262644A9876F432F /* PlaywriteBEWAL-VariableFont_wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
