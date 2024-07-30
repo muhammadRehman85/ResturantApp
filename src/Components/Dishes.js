@@ -1,42 +1,70 @@
 import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import Popup from '../Screens/popups/Popup';
+import { useDispatch, useSelector } from 'react-redux';
+import { addtoCart, removeCart } from '../../Redux/Slice';
+
 const Dishes = ({ foodItems, navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
-const [visible,setVisible]=useState(false)
+  const [visible, setVisible] = useState(false);
+
+  const cartItems = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
   const gotoDetails = (item) => {
     navigation.navigate('Details', { item });
   };
-const LongPressPopup=()=>{
-  setVisible(true)
-  return(<>
-    {visible &&<Popup/>}
-  </>)
-}
-  const renderFoodItems = ({ item }) => (<View>
-    
-    <TouchableOpacity onLongPress={LongPressPopup}onPress={() => gotoDetails(item)}>
-      <View style={styles.foodItemContainer}>
-        <View style={styles.imageContainer}>
-          <Image source={item.image} style={styles.foodImage} />
-        </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.foodTitle}>{item.title}</Text>
-          <Text style={styles.foodDescription} numberOfLines={3} ellipsizeMode="tail">
-            {item.description}
-          </Text>
-          <View style={styles.priceContainer}>
-            <Text>{item.price}</Text>
+
+  const addItem = (item) => {
+    dispatch(addtoCart(item));
+  };
+
+  const removeItem = (item) => {
+    dispatch(removeCart(item));
+  };
+
+  const LongPressPopup = useCallback(() => {
+    setVisible(true);
+  }, []);
+
+  const isItemInCart = (item) => {
+    return cartItems.some((cartItem) => cartItem.id === item.id);
+  };
+
+  const renderFoodItems = ({ item }) => (
+    <View>
+      <TouchableOpacity onLongPress={LongPressPopup} onPress={() => gotoDetails(item)}>
+        <View style={styles.foodItemContainer}>
+          <View style={styles.imageContainer}>
+            {/* Fetch image from URL */}
+            <Image source={{ uri: item.image }} style={styles.foodImage} />
           </View>
-          <TouchableOpacity style={styles.addButton}>
-            <Text>Add</Text>
-            <Image source={require('../../assets/foodImages/cart.png')} style={styles.cartIcon} />
-          </TouchableOpacity>
+          <View style={styles.infoContainer}>
+            <Text style={styles.foodTitle}>{item.title}</Text>
+            <Text style={styles.foodDescription} numberOfLines={3} ellipsizeMode="tail">
+              {item.desc}
+            </Text>
+            <View style={styles.priceContainer}>
+              <Text>{item.price}</Text>
+            </View>
+            {isItemInCart(item) ? (
+              <TouchableOpacity style={styles.addButton} onPress={() => removeItem(item)}>
+                <Text>Remove</Text>
+                <Image source={require('../../assets/foodImages/cart.png')} style={styles.cartIcon} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={styles.addButton} onPress={() => addItem(item)}>
+                <Text>Add</Text>
+                <Image source={require('../../assets/foodImages/cart.png')} style={styles.cartIcon} />
+              </TouchableOpacity>
+            )}
+          </View>
+          <Image source={require('../../assets/foodImages/heart.png')} style={styles.heartIcon} />
         </View>
-        <Image source={require('../../assets/foodImages/heart.png')} style={styles.heartIcon} />
-      </View>
-    </TouchableOpacity></View>
+      </TouchableOpacity>
+      {visible && <Popup />}
+    </View>
   );
 
   const skeleton = () => (
@@ -61,7 +89,7 @@ const LongPressPopup=()=>{
     <FlatList
       data={foodItems}
       renderItem={isLoading ? skeleton : renderFoodItems}
-      keyExtractor={item => item.id}
+      keyExtractor={(item) => item.id}
       contentContainerStyle={styles.listContentContainer}
     />
   );
@@ -87,8 +115,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   foodImage: {
-    width: '90%',
-    height: '60%',
+    width: '100%',
+    height: '100%',
+    borderRadius: 5, // Adjust based on your design preference
   },
   infoContainer: {
     width: '60%',
@@ -145,8 +174,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   skeletonImage: {
-    width: '90%',
-    height: '60%',
+    width: '100%',
+    height: '100%',
     backgroundColor: '#ecf0f1',
   },
   skeletonTitle: {

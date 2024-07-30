@@ -24,7 +24,7 @@ const Header = ({ navigation }) => {
       {visible&&<View style={{width:150,height:40,backgroundColor:'white',elevation:2,zIndex:2,position:'absolute',top:50,right:20,borderWidth:0.2,flexDirection:'row',}}><Text>help</Text><TouchableOpacity onPress={()=>setVisible(false)}><Text style={{marginLeft:20}}>X</Text></TouchableOpacity></View>}
       <View style={styles.leftSection}>
         <View style={styles.deliveryRow}>
-          <Text style={{fontFamily:'PlaywriteBEWAL-Regular',fontSize:10}}>deliver to</Text>
+          <Text style={{fontFamily:'PlaywriteBEWAL-Regular',fontSize:10}} onPress={()=>navigation.navigate('SelectLocation')}>deliver to</Text>
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.dropdownIcon}

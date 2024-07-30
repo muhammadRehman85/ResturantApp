@@ -1,13 +1,18 @@
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import notifee from '@notifee/react-native';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addtoCart } from '../../../Redux/Slice';
 const Details = ({ route }) => {
-  const { item } = route.params;
+  const cartItems = useSelector(state => state.cart); // Select only the cart slice
   
-  console.log(item);
-  
-  // Notification function
+  const dispatch=useDispatch();
+  const addItem = (item) => () => {
+    dispatch(addtoCart(item));
+    onDisplayNotification();
+  };
+  const { item } = route.params;  
+  //--------------------------- Notification function-------------------------
   const onDisplayNotification = async () => {
     try {
       console.log('send');
@@ -37,21 +42,21 @@ const Details = ({ route }) => {
       console.error('Notification error:', error);
     }
   };
-
+// -------------------------------------------------------
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={item.image} style={styles.mainImage} />
+        <Image source={{ uri: item.image }} style={styles.mainImage} />
       </View>
       <ScrollView>
         <View style={styles.detailsContainer}>
           <Text style={styles.title}>{item.title}</Text>
           <Image source={require('../../../assets/foodImages/heart.png')} style={styles.heartIcon} />
-          <Text style={styles.description}>{item.description}</Text>
+          <Text style={styles.description}>{item.desc}</Text>
           <Text style={styles.price}>{item.price}</Text>
         </View>
         <View style={styles.addButtonContainer}>
-          <TouchableOpacity style={styles.addButton} onPress={onDisplayNotification}>
+          <TouchableOpacity style={styles.addButton} onPress={addItem(item)}>
             <Text style={styles.addButtonText}>ADD</Text>
             <Image source={require('../../../assets/foodImages/cart.png')} style={styles.cartIcon} />
           </TouchableOpacity>

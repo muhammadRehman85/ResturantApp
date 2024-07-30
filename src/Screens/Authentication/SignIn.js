@@ -7,10 +7,14 @@ import {
   StyleSheet,
   Image
 } from 'react-native';
+import '../../../i18n';
+import { useTranslation } from 'react-i18next';
 
 const SignIn = ({ navigation }) => {
+  const { t, i18n } = useTranslation();
   const [isChecked, setIsChecked] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [language, setLanguage] = useState('en'); // State for language
 
   // State variables for form fields
   const [email, setEmail] = useState('');
@@ -24,29 +28,38 @@ const SignIn = ({ navigation }) => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
+  const toggleLanguage = () => {
+    const newLanguage = language === 'en' ? 'ur' : 'en';
+    i18n.changeLanguage(newLanguage);
+    setLanguage(newLanguage);
+  };
+
   const gotoForgotPassword = () => {
     navigation.navigate('ForgotPassword');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Sign In</Text>
+      <TouchableOpacity style={{ flexDirection:'row',position: 'absolute', top: 10, right: 10 }} onPress={toggleLanguage}>
+     <Text style={{color:'white',marginHorizontal:10,fontSize:16}}>{language}</Text><Image style={{ width: 20, height: 20 }} source={require('../../../assets/wlang.png')} />
+      </TouchableOpacity>
+      <Text style={styles.header}>{t('Sign In')}</Text>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Email</Text>
+        <Text style={styles.label}>{t('Email')}</Text>
         <TextInput
           style={styles.input}
-          placeholder="Email"
+          placeholder={t('Email')}
           placeholderTextColor="cyan"
           keyboardType="email-address"
           value={email}
           onChangeText={setEmail}
         />
-        <Text style={styles.label}>Password</Text>
+        <Text style={styles.label}>{t('Password')}</Text>
         <View style={styles.passwordContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder={t('Password')}
             placeholderTextColor="cyan"
             secureTextEntry={!isPasswordVisible}
             value={password}
@@ -75,19 +88,19 @@ const SignIn = ({ navigation }) => {
             }
             style={styles.checkboxIcon}
           />
-          <Text style={styles.checkboxText}>Remember me</Text>
+          <Text style={styles.checkboxText}>{t('Remember me')}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={gotoForgotPassword}>
-          <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+          <Text style={styles.forgotPasswordText}>{t('Forgot password?')}</Text>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('DrawerNavigator')}>
-        <Text style={styles.buttonText}>Sign In</Text>
+        <Text style={styles.buttonText}>{t('Sign In')}</Text>
       </TouchableOpacity>
 
       <View style={styles.orSignInContainer}>
-        <Text style={styles.orSignInText}>_________ Or Sign In with _______</Text>
+        <Text style={styles.orSignInText}>_________{t('Or Sign In with')}  _______</Text>
       </View>
 
       <View style={styles.socialSignInContainer}>
@@ -109,7 +122,7 @@ const SignIn = ({ navigation }) => {
 
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.footerText}>Don't have an account? <Text style={styles.signInText}>Sign Up</Text></Text>
+          <Text style={styles.footerText}>{t('Do not have an account?')}<Text style={styles.signInText}>Sign Up</Text></Text>
         </TouchableOpacity>
       </View>
     </View>

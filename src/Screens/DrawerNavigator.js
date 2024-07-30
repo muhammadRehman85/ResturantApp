@@ -11,6 +11,7 @@ import PaymetsMethods from './DrawerScreens/PaymentsMethods';
 import ChangePassword from './DrawerScreens/ChangePassword';
 import Logout from './DrawerScreens/Logout';
 import PaymentsMethods from './DrawerScreens/PaymentsMethods';
+import AddData from './DrawerScreens/AddData';
 
 const Drawer = createDrawerNavigator();
 
@@ -42,6 +43,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="PaymentsMethods" component={PaymentsMethods} />
       <Drawer.Screen name="Logout" component={Logout} />
       <Drawer.Screen name="ChangePassword" component={ChangePassword} />
+      <Drawer.Screen name="AddData" component={AddData} />
     </Drawer.Navigator>
     <NavigationContainer independent={true}>
 

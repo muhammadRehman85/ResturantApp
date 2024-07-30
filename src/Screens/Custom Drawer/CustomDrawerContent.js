@@ -115,6 +115,11 @@ const CustomDrawerContent = (props) => {
               onPress={() => setModalVisible(true)}
               icon={require('../../../assets/DrawerIcons/acountdelete.png')}
             />
+              <CustomDrawerItem
+              label="Add Data"
+              onPress={() => props.navigation.navigate('AddData')}
+              icon={require('../../../assets/DrawerIcons/payments.png')}
+            />
           </View>
         </DrawerContentScrollView>
       )}

@@ -5,9 +5,10 @@ import Starter from './CategoriesScreens/Starter';
 import SomewhatLocal from './CategoriesScreens/SomewhatLocal';
 import Somewhatsooper from './CategoriesScreens/Somewhatsooper';
 import CheezyTreats from './CategoriesScreens/CheezyTreats';
-
+import { useTranslation } from 'react-i18next';
 const Tab = createMaterialTopTabNavigator();
 const TopTabNavigator = () => {
+  const {t}=useTranslation();
   return (
     <Tab.Navigator   
      screenOptions={{
@@ -18,10 +19,10 @@ const TopTabNavigator = () => {
         // tabBarActiveTintColor: 'b',
         // tabBarInactiveTintColor: 'black',
       }}>
-    <Tab.Screen name="Starter" component={Starter} />
-    <Tab.Screen name="Somewhat Local" component={SomewhatLocal} />
-    <Tab.Screen name="Somewhat Sooper" component={Somewhatsooper} />
-    <Tab.Screen name="Cheezy Treats" component={CheezyTreats} />
+    <Tab.Screen name={t('STARTER')} component={Starter} />
+    <Tab.Screen name={t('SOMEWHAT LOCAL')} component={SomewhatLocal} />
+    <Tab.Screen name= {t('SOMEWHAT SOOPER')} component={Somewhatsooper} />
+    <Tab.Screen name={t('CHEEZY TREATS')}  component={CheezyTreats} />
   </Tab.Navigator>
   )
 }

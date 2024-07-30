@@ -5,7 +5,6 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassword';
 import DrawerNavigator from '../DrawerNavigator';
-import Help from '../AppNavigationScreens/Help';
 import Header from '../../Components/Header';
 import Search from '../../Screens/AppNavigationScreens/Search'
 import Details from '../AppNavigationScreens/Details';
@@ -13,6 +12,8 @@ import Dishes from '../../Components/Dishes';
 import Starter from '../CategoriesScreens/Starter';
 import TopTabNavigator from '../TopTabNavigator';
 import EditProfile from '../DrawerScreens/EditProfile';
+import SelectLocation from '../AppNavigationScreens/SelectLocation';
+import Cart from '../AppNavigationScreens/Cart';
 const Stack = createNativeStackNavigator();
 
 const NaviagationStack = () => {
@@ -40,8 +41,8 @@ const NaviagationStack = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="Help"
-            component={Help}
+            name="Cart"
+            component={Cart}
             
           />
            <Stack.Screen
@@ -61,6 +62,10 @@ const NaviagationStack = () => {
              <Stack.Screen
             name="EditProfile"
             component={EditProfile}          />
+             <Stack.Screen
+            name="SelectLocation"
+            component={SelectLocation}   
+            options={{headerShown:false}}       />
         </Stack.Navigator></>
         
   )
