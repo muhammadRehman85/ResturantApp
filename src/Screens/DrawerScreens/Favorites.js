@@ -1,30 +1,27 @@
-import { View, Text, Image ,} from 'react-native'
-import React, { useState,useEffect, } from 'react'
-import Details from '../AppNavigationScreens/Details'
-import BackgroundServices from '../../Components/BackgroundService'
-import NetInfo from '@react-native-community/netinfo';
-import { useNetInfo } from '@react-native-community/netinfo';
-const Favorites = () => {
- const [isConnected,setIsConnected]=useState(false);
-//  const netInfo = useNetInfo();
-  useEffect(() => {
-    const unsubscribe =NetInfo .addEventListener(state => {
-      console.log("Connection type", state.type);
-      console.log("Is connected?", state.isConnected);
-      setIsConnected( state.isConnected)
-    });
-    
-    // Unsubscribe
-    return()=>{
-      unsubscribe();
+import { View, Text, Image, StyleSheet } from 'react-native';
+import React from 'react';
+import Dishes from '../../Components/Dishes';
+import { useSelector } from 'react-redux';
 
-    }
-  }, []);
-  return (<>
-{isConnected?(<View  style={{flex:1,backgroundColor:'white',alignItems:'center',justifyContent:'center'
-}} ><Text>internet available</Text></View>):(<View style={{flex:1,backgroundColor:'white',alignItems:'center',justifyContent:'center'
-}}><Image source={require('../../../assets/nointernet.png')} style={{width:200,height:200}}/></View>)}
-</> )
-}
+const Cart = () => {
+  const favItems = useSelector(state => state.cart.favorites);
+  const theme = useSelector(state => state.cart.theme);
 
-export default Favorites
+  return (
+    <View style={styles.container(theme)}>
+      <Dishes foodItems={favItems} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: (theme) => ({
+    flex: 1,
+    backgroundColor: theme === 'dark' ? 'black' : 'white',
+  }),
+  text: (theme) => ({
+    color: theme === 'dark' ? 'white' : 'black',
+  }),
+});
+
+export default Cart;

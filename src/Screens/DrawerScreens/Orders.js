@@ -1,59 +1,42 @@
-import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useRef, useState} from 'react';
-import {Animated} from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import React from 'react';
+import Dishes from '../../Components/Dishes';
+import { useSelector } from 'react-redux';
 
 const Orders = () => {
-  const animation = useRef(new Animated.Value(0)).current;
-const [click,setClick]=useState(false)
-  const startAnimation = () => {
-    Animated.spring(animation, {
-      toValue:click?0: 1,
-      useNativeDriver: true,
-    }).start();
-  };
+  const foodItems = useSelector(state => state.cart.cartItems);
+  const theme = useSelector(state => state.cart.theme);
 
   return (
-    <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-      <Animated.View
-        style={[
-          {width: 100, height:100, backgroundColor: 'yellow'},
-          {
-            transform: [
-              {
-                translateY: animation.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, -100],
-                }),
-              },  {
-                rotate: animation.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: ['0deg','360deg'],
-                }),
-              },
-              {
-                translateX: animation.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0, 100],
-                }),
-              }, 
-              {
-                scale: animation.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [1,0.5],
-                }),
-              }, 
-            ],
-          },
-        ]}>
-        <Text>hello</Text>
-      </Animated.View>
-      <TouchableOpacity style={{width:100,height:40,backgroundColor:'cyan',borderRadius:10,margin:150}} onPress={()=>{
-        setClick(!click)
-        startAnimation()}}>
-        <Text style={{textAlign:'center'}}>start animation</Text>
-      </TouchableOpacity>
+    <View style={[styles.container, theme === 'dark' ? styles.darkContainer : styles.lightContainer]}>
+      <Text style={[styles.header, theme === 'dark' ? styles.darkText : styles.lightText]}>Your Orders</Text>
+      <Dishes foodItems={foodItems} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  darkContainer: {
+    backgroundColor: 'black',
+  },
+  lightContainer: {
+    backgroundColor: 'white',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  darkText: {
+    color: 'white',
+  },
+  lightText: {
+    color: 'black',
+  },
+});
 
 export default Orders;

@@ -1,22 +1,42 @@
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import notifee from '@notifee/react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addtoCart } from '../../../Redux/Slice';
+import { addtoCart, addtoFav, removeFav } from '../../../Redux/Slice'; 
+
 const Details = ({ route }) => {
-  const cartItems = useSelector(state => state.cart); // Select only the cart slice
-  
-  const dispatch=useDispatch();
-  const addItem = (item) => () => {
+  const { item } = route.params;
+  const dispatch = useDispatch();
+  const favorites = useSelector(state => state.cart.favorites); 
+  const theme = useSelector(state => state.cart.theme);
+  const [isFav, setIsFav] = useState(false);
+
+  // --------------Check if the item is already in favorites----------
+  useEffect(() => {
+    const checkIfFav = favorites.some(favItem => favItem.id === item.id);
+    setIsFav(checkIfFav);
+  }, [favorites, item.id]);
+
+  // Add item to cart
+  const addItem = () => {
     dispatch(addtoCart(item));
     onDisplayNotification();
   };
-  const { item } = route.params;  
-  //--------------------------- Notification function-------------------------
+
+  // --------------------------Add or remove item from favorites-------
+  const toggleFavorite = () => {
+    if (isFav) {
+      dispatch(removeFav(item)); 
+    } else {
+      dispatch(addtoFav(item));
+    }
+    setIsFav(!isFav);
+  };
+
   const onDisplayNotification = async () => {
     try {
       console.log('send');
-      // Request permissions (required for iOS)
+   
       await notifee.requestPermission();
 
       // Create a channel (required for Android)
@@ -28,11 +48,9 @@ const Details = ({ route }) => {
       // Display a notification
       await notifee.displayNotification({
         title: item.title,
-        body: item.title +' is added to your cart',
+        body: item.title + ' is added to your cart',
         android: {
           channelId,
-          // smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
-          // pressAction is needed if you want the notification to open the app when pressed
           pressAction: {
             id: 'default',
           },
@@ -42,21 +60,30 @@ const Details = ({ route }) => {
       console.error('Notification error:', error);
     }
   };
-// -------------------------------------------------------
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container(theme)}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: item.image }} style={styles.mainImage} />
       </View>
       <ScrollView>
-        <View style={styles.detailsContainer}>
-          <Text style={styles.title}>{item.title}</Text>
-          <Image source={require('../../../assets/foodImages/heart.png')} style={styles.heartIcon} />
-          <Text style={styles.description}>{item.desc}</Text>
-          <Text style={styles.price}>{item.price}</Text>
+        <View style={styles.detailsContainer(theme)}>
+          <Text style={styles.title(theme)}>{item.title}</Text>
+          <TouchableOpacity onPress={toggleFavorite}>
+            <Image
+              source={
+                isFav
+                  ? require('../../../assets/foodImages/favorite.png') 
+                  : require('../../../assets/foodImages/heart.png') 
+              }
+              style={styles.heartIcon}
+            />
+          </TouchableOpacity>
+          <Text style={styles.description(theme)}>{item.desc}</Text>
+          <Text style={styles.price(theme)}>{item.price}</Text>
         </View>
         <View style={styles.addButtonContainer}>
-          <TouchableOpacity style={styles.addButton} onPress={addItem(item)}>
+          <TouchableOpacity style={styles.addButton} onPress={addItem}>
             <Text style={styles.addButtonText}>ADD</Text>
             <Image source={require('../../../assets/foodImages/cart.png')} style={styles.cartIcon} />
           </TouchableOpacity>
@@ -67,11 +94,12 @@ const Details = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  container: (theme) => ({
     flex: 1,
     flexDirection: 'column',
     paddingTop: 20,
-  },
+    backgroundColor: theme === 'dark' ? 'black' : 'white',
+  }),
   imageContainer: {
     width: '100%',
     height: '50%',
@@ -81,15 +109,17 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  detailsContainer: {
+  detailsContainer: (theme) => ({
     padding: 20,
     position: 'relative',
-  },
-  title: {
+    backgroundColor: theme === 'dark' ? 'black' : 'white',
+  }),
+  title: (theme) => ({
     fontSize: 18,
     fontWeight: 'bold',
     marginVertical: 10,
-  },
+    color: theme === 'dark' ? 'white' : 'black',
+  }),
   heartIcon: {
     width: 30,
     height: 30,
@@ -97,14 +127,16 @@ const styles = StyleSheet.create({
     top: 20,
     right: 25,
   },
-  description: {
+  description: (theme) => ({
     marginVertical: 10,
-  },
-  price: {
+    color: theme === 'dark' ? 'white' : 'black',
+  }),
+  price: (theme) => ({
     marginVertical: 10,
     fontWeight: 'bold',
     fontSize: 18,
-  },
+    color: theme === 'dark' ? 'white' : 'black',
+  }),
   addButtonContainer: {
     width: '100%',
   },

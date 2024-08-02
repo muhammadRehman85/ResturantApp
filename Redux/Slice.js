@@ -1,19 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [];
-
 const cartSlice = createSlice({
   name: 'cart',
-  initialState,
+  initialState: {
+    cartItems: [],
+    favorites: [],
+    theme: 'light', // Default theme
+  },
   reducers: {
     addtoCart: (state, action) => {
-      state.push(action.payload);
+      state.cartItems.push(action.payload);
     },
     removeCart: (state, action) => {
-      return state.filter(item => item.id !== action.payload.id);
-    }
-  }
+      state.cartItems = state.cartItems.filter(item => item.id !== action.payload.id);
+    },
+    addtoFav: (state, action) => {
+      if (!state.favorites.some(item => item.id === action.payload.id)) {
+        state.favorites.push(action.payload);
+      }
+    },
+    removeFav: (state, action) => {
+      state.favorites = state.favorites.filter(item => item.id !== action.payload.id);
+    },
+    toggleTheme: (state) => {
+      state.theme = state.theme === 'light' ? 'dark' : 'light';
+    },
+  },
 });
 
-export const { addtoCart, removeCart } = cartSlice.actions;
+export const { addtoCart, removeCart, addtoFav, removeFav, toggleTheme } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -1,15 +1,18 @@
-import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import React, { useState, useCallback } from 'react';
+import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import Popup from '../Screens/popups/Popup';
 import { useDispatch, useSelector } from 'react-redux';
-import { addtoCart, removeCart } from '../../Redux/Slice';
+import { addtoCart, removeCart, addtoFav, removeFav } from '../../Redux/Slice';
 
 const Dishes = ({ foodItems, navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector((state) => state.cart.cartItems) || [];
+  const favorites = useSelector((state) => state.cart.favorites) || [];
+  const theme = useSelector(state => state.cart.theme); // Should be 'light' or 'dark'
+  console.log('Current theme:', theme); // Debugging log
   const dispatch = useDispatch();
 
   const gotoDetails = (item) => {
@@ -32,35 +35,55 @@ const Dishes = ({ foodItems, navigation }) => {
     return cartItems.some((cartItem) => cartItem.id === item.id);
   };
 
+  const isItemInFavorites = (item) => {
+    return favorites.some((favItem) => favItem.id === item.id);
+  };
+
+  const toggleFavorite = (item) => {
+    if (isItemInFavorites(item)) {
+      dispatch(removeFav(item));
+    } else {
+      dispatch(addtoFav(item));
+    }
+  };
+
   const renderFoodItems = ({ item }) => (
     <View>
       <TouchableOpacity onLongPress={LongPressPopup} onPress={() => gotoDetails(item)}>
-        <View style={styles.foodItemContainer}>
+        <View style={[styles.foodItemContainer, { backgroundColor: theme === 'dark' ? '#333' : '#fff' ,borderWidth:theme=='dark'?2:0}]}>
           <View style={styles.imageContainer}>
-            {/* Fetch image from URL */}
             <Image source={{ uri: item.image }} style={styles.foodImage} />
           </View>
           <View style={styles.infoContainer}>
-            <Text style={styles.foodTitle}>{item.title}</Text>
-            <Text style={styles.foodDescription} numberOfLines={3} ellipsizeMode="tail">
+            <Text style={[styles.foodTitle, { color: theme === 'dark' ? 'white' : 'black' }]}>{item.title}</Text>
+            <Text style={[styles.foodDescription, { color: theme === 'dark' ? 'lightgray' : 'grey' }]} numberOfLines={3} ellipsizeMode="tail">
               {item.desc}
             </Text>
-            <View style={styles.priceContainer}>
+            <View style={[styles.priceContainer, { backgroundColor: theme === 'dark' ? '#f39c12' : '#f1c40f' }]}>
               <Text>{item.price}</Text>
             </View>
             {isItemInCart(item) ? (
-              <TouchableOpacity style={styles.addButton} onPress={() => removeItem(item)}>
-                <Text>Remove</Text>
+              <TouchableOpacity style={[styles.addButton, { backgroundColor: theme === 'dark' ? '#e74c3c' : '#e74c3c' }]} onPress={() => removeItem(item)}>
+                <Text style={{ color: theme === 'dark' ? 'white' : 'black' }}>Remove</Text>
                 <Image source={require('../../assets/foodImages/cart.png')} style={styles.cartIcon} />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity style={styles.addButton} onPress={() => addItem(item)}>
-                <Text>Add</Text>
+              <TouchableOpacity style={[styles.addButton, { backgroundColor: theme === 'dark' ? '#2ecc71' : '#2ecc71' }]} onPress={() => addItem(item)}>
+                <Text style={{ color: theme === 'dark' ? 'white' : 'black' }}>Add</Text>
                 <Image source={require('../../assets/foodImages/cart.png')} style={styles.cartIcon} />
               </TouchableOpacity>
             )}
           </View>
-          <Image source={require('../../assets/foodImages/heart.png')} style={styles.heartIcon} />
+          <TouchableOpacity onPress={() => toggleFavorite(item)}>
+            <Image
+              source={
+                isItemInFavorites(item)
+                  ? require('../../assets/foodImages/favorite.png') // Image for favorite
+                  : require('../../assets/foodImages/heart.png') // Image for not favorite
+              }
+              style={styles.heartIcon}
+            />
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
       {visible && <Popup />}
@@ -68,7 +91,7 @@ const Dishes = ({ foodItems, navigation }) => {
   );
 
   const skeleton = () => (
-    <SkeletonPlaceholder backgroundColor="#e1e9ee" highlightColor="#f2f8fc">
+    <SkeletonPlaceholder backgroundColor={theme === 'dark' ? '#2c3e50' : '#e1e9ee'} highlightColor={theme === 'dark' ? '#34495e' : '#f2f8fc'}>
       <View style={styles.skeletonContainer}>
         <View style={styles.imageContainer}>
           <View style={styles.skeletonImage} />
@@ -117,7 +140,7 @@ const styles = StyleSheet.create({
   foodImage: {
     width: '100%',
     height: '100%',
-    borderRadius: 5, // Adjust based on your design preference
+    borderRadius: 5,
   },
   infoContainer: {
     width: '60%',
@@ -126,16 +149,13 @@ const styles = StyleSheet.create({
   },
   foodTitle: {
     fontWeight: 'bold',
-    color: 'black',
     margin: 5,
   },
   foodDescription: {
-    color: 'grey',
     fontSize: 12,
     margin: 8,
   },
   priceContainer: {
-    backgroundColor: '#f1c40f',
     width: 80,
     minHeight: 30,
     borderRadius: 5,
@@ -143,7 +163,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addButton: {
-    backgroundColor: '#e74c3c',
     width: 80,
     minHeight: 30,
     borderRadius: 5,

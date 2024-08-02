@@ -5,11 +5,16 @@ import Dishes from '../../Components/Dishes';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux'; // Import useSelector
 
 const Starter = ({ navigation }) => {
   const [foodItemsData, setFoodItemsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isConnected, setIsConnected] = useState(true);
+
+  // Get the theme from Redux
+  const theme = useSelector(state => state.cart.theme); // 'light' or 'dark'
+  console.log('Current theme:', theme); // Debugging line
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,14 +32,9 @@ const Starter = ({ navigation }) => {
               ...doc.data(),
             }));
             setFoodItemsData(items);
-            console.log("Food items data:", items);
-            // Save data to AsyncStorage
             await AsyncStorage.setItem('foodItemsData', JSON.stringify(items));
-          } else {
-            console.log("No food items found in Firestore.");
           }
         } else {
-          // Fetch data from AsyncStorage when offline
           const storedData = await AsyncStorage.getItem('foodItemsData');
           if (storedData) {
             setFoodItemsData(JSON.parse(storedData));
@@ -52,22 +52,23 @@ const Starter = ({ navigation }) => {
 
     fetchData();
 
-    // Listen for network connectivity changes
     const unsubscribeNetInfo = NetInfo.addEventListener(state => {
       console.log("Connection type", state.type);
       console.log("Is connected?", state.isConnected);
       setIsConnected(state.isConnected);
     });
 
-    // Cleanup functions
     return () => {
       unsubscribeNetInfo();
     };
   }, []);
 
   const SkeletonLoader = () => (
-    <SkeletonPlaceholder backgroundColor="#e1e9ee" highlightColor="#f2f8fc">
-      <View style={styles.skeletonContainer}>
+    <SkeletonPlaceholder
+      backgroundColor={theme === 'dark' ? '#2c2c2c' : '#e1e9ee'}
+      highlightColor={theme === 'dark' ? '#1a1a1a' : '#f2f8fc'}
+    >
+      <View style={[styles.skeletonContainer, { backgroundColor: theme === 'dark' ? '#2c2c2c' : '#ffffff' }]}>
         <View style={styles.imageContainer}>
           <View style={styles.skeletonImage} />
         </View>
@@ -84,24 +85,22 @@ const Starter = ({ navigation }) => {
   );
 
   if (loading) {
-    return (
-     
-        <SkeletonLoader />
-  
-    );
+    return <SkeletonLoader />;
   }
 
   if (!isConnected) {
     return (
-      <View style={styles.loadingContainer}>
-        <Text>No internet connection. Displaying cached data.</Text>
+      <View style={[styles.container, { backgroundColor: theme === 'dark' ? '#1c1c1c' : '#ffffff' }]}>
+        <Text style={{ color: theme === 'dark' ? 'white' : 'black' }}>
+          No internet connection. Displaying cached data.
+        </Text>
         <Dishes foodItems={foodItemsData} navigation={navigation} />
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme === 'dark' ? '#1c1c1c' : '#ffffff' }]}>
       <Dishes foodItems={foodItemsData} navigation={navigation} />
     </View>
   );
@@ -109,25 +108,24 @@ const Starter = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
     flex: 1,
   },
-
-  // loadingContainer: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
   skeletonContainer: {
     width: '100%',
     height: 180,
     flexDirection: 'row',
     elevation: 2,
-    // borderWidth: 0.5,
     borderRadius: 5,
     marginVertical: 10,
     position: 'relative',
-  },  infoContainer: {
+  },
+  imageContainer: {
+    width: '30%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  infoContainer: {
     width: '60%',
     height: '100%',
     padding: 10,

@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image
+  Image,
 } from 'react-native';
 import '../../../i18n';
-import { useTranslation } from 'react-i18next';
-
-const SignIn = ({ navigation }) => {
-  const { t, i18n } = useTranslation();
+import {useTranslation} from 'react-i18next';
+const SignIn = ({navigation}) => {
+  const {t, i18n} = useTranslation();
   const [isChecked, setIsChecked] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [language, setLanguage] = useState('en'); // State for language
@@ -40,8 +39,16 @@ const SignIn = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={{ flexDirection:'row',position: 'absolute', top: 10, right: 10 }} onPress={toggleLanguage}>
-     <Text style={{color:'white',marginHorizontal:10,fontSize:16}}>{language}</Text><Image style={{ width: 20, height: 20 }} source={require('../../../assets/wlang.png')} />
+      <TouchableOpacity
+        style={{flexDirection: 'row', position: 'absolute', top: 10, right: 10}}
+        onPress={toggleLanguage}>
+        <Text style={{color: 'white', marginHorizontal: 10, fontSize: 16}}>
+          {language}
+        </Text>
+        <Image
+          style={{width: 20, height: 20}}
+          source={require('../../../assets/wlang.png')}
+        />
       </TouchableOpacity>
       <Text style={styles.header}>{t('Sign In')}</Text>
 
@@ -95,12 +102,16 @@ const SignIn = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('DrawerNavigator')}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('DrawerNavigator')}>
         <Text style={styles.buttonText}>{t('Sign In')}</Text>
       </TouchableOpacity>
 
       <View style={styles.orSignInContainer}>
-        <Text style={styles.orSignInText}>_________{t('Or Sign In with')}  _______</Text>
+        <Text style={styles.orSignInText}>
+          _________{t('Or Sign In with')} _______
+        </Text>
       </View>
 
       <View style={styles.socialSignInContainer}>
@@ -122,7 +133,10 @@ const SignIn = ({ navigation }) => {
 
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.footerText}>{t('Do not have an account?')}<Text style={styles.signInText}>Sign Up</Text></Text>
+          <Text style={styles.footerText}>
+            {t('Do not have an account?')}
+            <Text style={styles.signInText}>Sign Up</Text>
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -1,33 +1,31 @@
-import {React, useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
   StyleSheet,
-  Button,
 } from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import Header from '../Components/Header';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import TopTabNavigator from './TopTabNavigator';
-import {useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
 import '../../i18n';
 
-const Tab = createBottomTabNavigator();
-
-const HomeScreen = ({navigation, route}) => {
-  const {t, i18n} = useTranslation();
-  const addedItems = useSelector(state => state.cart);
+const HomeScreen = ({ navigation, route }) => {
+  const { t } = useTranslation();
+  const theme = useSelector(state => state.cart.theme); // 'light' or 'dark'
+  const addedItems = useSelector(state => state.cart.cartItems) || [];
 
   const [visible, setVisible] = useState(false);
+
   const Cart = () => {
     navigation.navigate('Cart');
   };
+
   const LongPressPopup = () => {
     setVisible(true);
   };
+
   const search = () => {
     navigation.navigate('Search');
   };
@@ -35,18 +33,21 @@ const HomeScreen = ({navigation, route}) => {
   const openDrawer = () => {
     navigation.toggleDrawer();
   };
-  // const {selectedarea}=route.params;
-  const {selectedCity = '', selectedArea = ''} = route.params || {};
-  console.log(selectedArea, selectedCity);
+
+  const { selectedCity = '', selectedArea = '' } = route.params || {};
+
+  // Debugging: Log theme to verify its value
+  console.log('Current theme:', theme);
+
   return (
     <>
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: theme === 'dark' ? '#000' : '#fff' }]}>
         {visible && (
           <View
             style={{
               width: 150,
               height: 40,
-              backgroundColor: 'white',
+              backgroundColor: theme === 'dark' ? '#333' : '#f5f5f5',
               elevation: 2,
               zIndex: 2,
               position: 'absolute',
@@ -54,10 +55,13 @@ const HomeScreen = ({navigation, route}) => {
               right: 20,
               borderWidth: 0.2,
               flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingHorizontal: 10,
             }}>
-            <Text>help</Text>
+            <Text style={{ color: theme === 'dark' ? '#fff' : '#000' }}>Help</Text>
             <TouchableOpacity onPress={() => setVisible(false)}>
-              <Text style={{marginLeft: 20}}>X</Text>
+              <Text style={{ color: theme === 'dark' ? '#fff' : '#000' }}>X</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -77,7 +81,7 @@ const HomeScreen = ({navigation, route}) => {
               style={styles.dropdownIcon}
             />
           </View>
-          <Text style={styles.locationText}>
+          <Text style={{ ...styles.locationText, color: theme === 'dark' ? '#fff' : '#000' }}>
             {selectedCity + ' ' + selectedArea}
           </Text>
         </View>
@@ -112,7 +116,7 @@ const HomeScreen = ({navigation, route}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.logoContainer}>
+      <View style={[styles.logoContainer, { backgroundColor: theme === 'dark' ? '#000' : '#fff' }]}>
         <Image source={require('../../assets/logo.jpg')} style={styles.logo} />
       </View>
       <TopTabNavigator />
@@ -124,7 +128,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '8%',
-    backgroundColor: 'white',
     elevation: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -143,7 +146,6 @@ const styles = StyleSheet.create({
   },
   locationText: {
     fontWeight: 'bold',
-    color: 'black',
   },
   rightSection: {
     flexDirection: 'row',
@@ -156,11 +158,8 @@ const styles = StyleSheet.create({
   logoContainer: {
     width: '100%',
     height: '25%',
-    position: 'fixed',
-
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
   },
   logo: {
     width: '40%',

@@ -1,36 +1,32 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-const CustomDrawerItem = ({ label, onPress, icon }) => {
-  // Define the label color based on the label value
-  const labelColor = label === 'Request Account Deletion' ? 'red' : 'black';
-
+const CustomDrawerItem = ({ label, onPress, icon, theme }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.drawerItem}>
+    <TouchableOpacity onPress={onPress} style={styles.container(theme)}>
       <Image source={icon} style={styles.icon} />
-      <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
+      <Text style={styles.label(theme)}>{label}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  drawerItem: {
+  container: (theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderColor: '#ecf0f1',
-  },
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: theme === 'dark' ? 'black' : 'white',
+  }),
   icon: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
     marginRight: 10,
   },
-  label: {
+  label: (theme) => ({
     fontSize: 16,
-    fontWeight:'bold'
-
-  },
+    color: theme === 'dark' ? 'white' : 'black',
+  }),
 });
 
 export default CustomDrawerItem;

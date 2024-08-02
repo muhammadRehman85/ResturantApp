@@ -3,10 +3,12 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, Modal, Alert } from 'r
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import CustomDrawerItem from './CustomDrawerItem';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const CustomDrawerContent = (props) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const theme = useSelector(state => state.cart.theme);
 
   const showLogoutAlert = () => {
     Alert.alert(
@@ -29,7 +31,7 @@ const CustomDrawerContent = (props) => {
   };
 
   const Popup = () => (
-    <View style={styles.container}>
+    <View style={styles.container(theme)}>
       <Modal
         animationType="slide"
         transparent={false}
@@ -39,8 +41,8 @@ const CustomDrawerContent = (props) => {
         }}
       >
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Are you sure to Delete Acount</Text>
+          <View style={styles.modalView(theme)}>
+            <Text style={styles.modalText(theme)}>Are you sure to Delete Account</Text>
             <TouchableOpacity
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
@@ -54,71 +56,85 @@ const CustomDrawerContent = (props) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container(theme)}>
       {modalVisible ? (
         <Popup />
       ) : (
-        <DrawerContentScrollView {...props} style={styles.container}>
-          <View style={styles.header}>
+        <DrawerContentScrollView {...props} style={styles.container(theme)}>
+          <View style={styles.header(theme)}>
             <View style={styles.logoContainer}>
               <Image source={require('../../../assets/DrawerIcons/user.png')} style={styles.logo} />
             </View>
             <View>
-              <Text style={styles.userName}>Muhammad Rehman</Text>
+              <Text style={styles.userName(theme)}>Muhammad Rehman</Text>
               <View style={styles.contactContainer}>
-                <Text style={styles.contactText}>+923121912814</Text>
-                <TouchableOpacity style={styles.logoContainer} onPress={() => navigation.navigate('EditProfile')}>
+                <Text style={styles.contactText(theme)}>+923121912814</Text>
+                <TouchableOpacity style={styles.logoContainer} onPress={() => navigation.navigate('StepOne')}>
                   <Image source={require('../../../assets/edit.png')} style={styles.editIcon} />
                 </TouchableOpacity>
               </View>
             </View>
           </View>
           <View>
-            <Text style={styles.sectionTitle}>Personal</Text>
+            <Text style={styles.sectionTitle(theme)}>Personal</Text>
           </View>
           <View style={styles.drawerItems}>
             <CustomDrawerItem
               label="Orders"
               onPress={() => props.navigation.navigate('Orders')}
               icon={require('../../../assets/DrawerIcons/orders.png')}
+              theme={theme}
             />
             <CustomDrawerItem
               label="My Address"
               onPress={() => props.navigation.navigate('Addresses')}
               icon={require('../../../assets/DrawerIcons/address.png')}
+              theme={theme}
             />
             <CustomDrawerItem
               label="My Favorites"
               onPress={() => props.navigation.navigate('Favorites')}
               icon={require('../../../assets/DrawerIcons/fav.png')}
+              theme={theme}
             />
             <CustomDrawerItem
               label="My Payment Methods"
               onPress={() => props.navigation.navigate('PaymentsMethods')}
               icon={require('../../../assets/DrawerIcons/payments.png')}
+              theme={theme}
             />
             <View>
-              <Text style={styles.sectionTitle}>General</Text>
+              <Text style={styles.sectionTitle(theme)}>General</Text>
             </View>
             <CustomDrawerItem
               label="Change Password"
               onPress={() => props.navigation.navigate('ChangePassword')}
               icon={require('../../../assets/DrawerIcons/changepassword.png')}
+              theme={theme}
             />
             <CustomDrawerItem
               label="Logout"
               onPress={showLogoutAlert}
               icon={require('../../../assets/DrawerIcons/logout.png')}
+              theme={theme}
             />
             <CustomDrawerItem
               label="Request Account Deletion"
               onPress={() => setModalVisible(true)}
               icon={require('../../../assets/DrawerIcons/acountdelete.png')}
+              theme={theme}
             />
-              <CustomDrawerItem
+            <CustomDrawerItem
               label="Add Data"
               onPress={() => props.navigation.navigate('AddData')}
               icon={require('../../../assets/DrawerIcons/payments.png')}
+              theme={theme}
+            />
+            <CustomDrawerItem
+              label="Settings"
+              onPress={() => props.navigation.navigate('SettingsScreen')}
+              icon={require('../../../assets/DrawerIcons/payments.png')}
+              theme={theme}
             />
           </View>
         </DrawerContentScrollView>
@@ -128,17 +144,18 @@ const CustomDrawerContent = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
+  container: (theme) => ({
+    backgroundColor: theme === 'dark' ? 'black' : 'white',
     width: '100%',
     height: '100%',
     paddingHorizontal: 15,
-  },
-  header: {
+  }),
+  header: (theme) => ({
     padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
-  },
+    backgroundColor: theme === 'dark' ? 'black' : 'white',
+  }),
   logoContainer: {
     width: '25%',
   },
@@ -147,26 +164,28 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 10,
   },
-  userName: {
-    color: 'black',
+  userName: (theme) => ({
+    color: theme === 'dark' ? 'white' : 'black',
     fontWeight: 'bold',
-  },
+  }),
   contactContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  contactText: {
+  contactText: (theme) => ({
     fontSize: 13,
-  },
+    color: theme === 'dark' ? 'white' : 'black',
+  }),
   editIcon: {
     width: 18,
     height: 18,
   },
-  sectionTitle: {
+  sectionTitle: (theme) => ({
     fontSize: 25,
     fontWeight: 'bold',
     marginVertical: 10,
-  },
+    color: theme === 'dark' ? 'white' : 'black',
+  }),
   drawerItems: {
     marginTop: 20,
   },
@@ -182,9 +201,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 22,
   },
-  modalView: {
+  modalView: (theme) => ({
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: theme === 'dark' ? 'black' : 'white',
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
@@ -196,7 +215,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-  },
+  }),
   button: {
     borderRadius: 20,
     padding: 10,
@@ -210,10 +229,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  modalText: {
+  modalText: (theme) => ({
     marginBottom: 15,
     textAlign: 'center',
-  },
+    color: theme === 'dark' ? 'white' : 'black',
+  }),
 });
 
 export default CustomDrawerContent;
